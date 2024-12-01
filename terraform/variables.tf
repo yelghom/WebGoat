@@ -57,16 +57,16 @@ variable "resource_quota" {
   }
 }
 
-# Container image for WebGoat
-variable "webgoat_image" {
-  description = "Docker image for the WebGoat application"
-  type        = string
-  default     = "webgoat/webgoat-8.0"
-}
-
 # Deployment replicas
 variable "replicas" {
   description = "Number of replicas for the WebGoat deployment"
   type        = number
   default     = 1
+}
+
+# Container image for WebGoat
+variable "webgoat_image" {
+  description = "Docker image for the WebGoat application"
+  type        = string
+  default     = "yelghom/webgoat:latest"
 }
