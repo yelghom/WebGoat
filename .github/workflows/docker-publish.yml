@@ -21,8 +21,8 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build -t yelghom/WebGoat:latest .
+          docker build -t yelghom/webgoat:latest .
 
       - name: Push the Docker image
         run: |
-          docker push yelghom/WebGoat:latest
+          docker push yelghom/webgoat:latest
