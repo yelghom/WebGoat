@@ -18,6 +18,16 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+          
+      - name: Set up Java 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: 21
+          distribution: 'temurin'
+          
+      - name: Build with Maven
+        run: |
+          mvn -f WebGoat/pom.xml clean package -DskipTests
 
       - name: Build the Docker image
         run: |
