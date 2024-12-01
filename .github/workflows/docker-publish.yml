@@ -27,7 +27,7 @@ jobs:
           
       - name: Build with Maven
         run: |
-          mvn -f WebGoat/pom.xml clean package -DskipTests
+          mvn clean package -DskipTests
 
       - name: Build the Docker image
         run: |
