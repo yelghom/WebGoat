@@ -6,108 +6,22 @@
         command: kubectl create namespace webgoat
         ignore_errors: true
 
-      - name: Create Resource Quota YAML file
-        copy:
-            content: |
-                apiVersion: v1
-                kind: ResourceQuota
-                metadata:
-                  name: webgoat-quota
-                  namespace: webgoat
-                spec:
-                  hard:
-                    requests.cpu: "2"
-                    requests.memory: "2Gi"
-                    limits.cpu: "4"
-                    limits.memory: "4Gi"
-                    pods: "10"
-            dest: /tmp/webgoat-resource-quota.yml
-
       - name: Apply Resource Quota for WebGoat
-        command: kubectl apply -f /tmp/webgoat-resource-quota.yml
+        command: kubectl apply -f resource_quota.yml
         ignore_errors: true
 
       - name: Apply Network Policy for WebGoat
-        copy:
-            content: |
-                apiVersion: networking.k8s.io/v1
-                kind: NetworkPolicy
-                metadata:
-                  name: webgoat-network-policy
-                  namespace: webgoat
-                spec:
-                  podSelector:
-                    matchLabels:
-                      app: webgoat
-                  ingress:
-                  - from:
-                    - namespaceSelector:
-                        matchLabels:
-                          environment: production
-                    ports:
-                    - protocol: TCP
-                      port: 8080
-                  policyTypes:
-                  - Ingress
-            dest: /tmp/webgoat-network-policy.yml
-
-      - name: Apply Network Policy
-        command: kubectl apply -f /tmp/webgoat-network-policy.yml
+        command: kubectl apply -f network_policy.yml
         ignore_errors: true
 
       - name: Create Service Account for WebGoat
         command: kubectl create serviceaccount webgoat-sa -n webgoat
         ignore_errors: true
 
-      - name: Create Deployment for WebGoat
-        copy:
-            content: |
-                apiVersion: apps/v1
-                kind: Deployment
-                metadata:
-                  name: webgoat-app
-                  namespace: webgoat
-                  labels:
-                    app: webgoat
-                spec:
-                  replicas: 2
-                  selector:
-                    matchLabels:
-                      app: webgoat
-                  template:
-                    metadata:
-                      labels:
-                        app: webgoat
-                    spec:
-                      containers:
-                      - name: webgoat
-                        image: yelghom/webgoat
-                        ports:
-                        - containerPort: 8080
-            dest: /tmp/webgoat-deployment.yml
-
       - name: Apply Deployment for WebGoat
-        command: kubectl apply -f /tmp/webgoat-deployment.yml
+        command: kubectl apply -f deployment.yml
         ignore_errors: true
 
-      - name: Create Service for WebGoat
-        copy:
-            content: |
-                apiVersion: v1
-                kind: Service
-                metadata:
-                  name: webgoat-service
-                  namespace: webgoat
-                spec:
-                  selector:
-                    app: webgoat
-                  ports:
-                  - protocol: TCP
-                    port: 8080
-                    targetPort: 8080
-                  type: ClusterIP
-            dest: /tmp/webgoat-service.yml
-
       - name: Apply Service for WebGoat
-        command: kubectl apply -f /tmp/webgoat-service.yml
+        command: kubectl apply -f service_account.yml
         ignore_errors: true

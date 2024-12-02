@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: webgoat
+    namespace: webgoat
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: webgoat
+    template:
+        metadata:
+            labels:
+                app: webgoat
+        spec:
+            serviceAccountName: webgoat-sa
+            containers:
+                - name: webgoat
+                  image: yelghom/webgoat:latest
+                  ports:
+                      - containerPort: 8080
+                        name: http
+                  resources:
+                      requests:
+                          memory: "512Mi"
+                          cpu: "500m"
+                      limits:
+                          memory: "1Gi"
+                          cpu: "1"
+                  startupProbe:
+                      tcpSocket:
+                          port: 8080
+                      initialDelaySeconds: 60
+                      periodSeconds: 10
+                      failureThreshold: 30
