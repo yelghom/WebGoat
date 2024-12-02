@@ -35,11 +35,6 @@ jobs:
         sudo apt update
         sudo apt install -y ansible
 
-    # Set the Kubernetes config
-    - name: Set Kubernetes config for kubectl
-      run: |
-        echo "$(minikube kubectl -- get kubeconfig)" > ~/.kube/config
-
     # Deploy with Ansible
     - name: Deploy with Ansible
       run: |
