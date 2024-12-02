@@ -1,0 +1,46 @@
+name: Deploy Ansible with Minikube and kubectl
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the code from the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Set up Minikube
+    - name: Set up Minikube
+      run: |
+        curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+        sudo chmod +x minikube
+        sudo mv minikube /usr/local/bin/
+        minikube start --driver=docker
+
+    # Set up kubectl
+    - name: Install kubectl
+      run: |
+        curl -LO "https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl"
+        sudo chmod +x kubectl
+        sudo mv kubectl /usr/local/bin/
+
+    # Set up Ansible
+    - name: Set up Ansible
+      run: |
+        sudo apt update
+        sudo apt install -y ansible
+
+    # Set the Kubernetes config
+    - name: Set Kubernetes config for kubectl
+      run: |
+        echo "$(minikube kubectl -- get kubeconfig)" > ~/.kube/config
+
+    # Deploy with Ansible
+    - name: Deploy with Ansible
+      run: |
+        ansible-playbook -i hosts configure_cluster.yml
