@@ -17,6 +17,10 @@ jobs:
         repository: 'yelghom/WebGoat'
         path: 'WebGoat'
 
+    - name: List files in ansible directory
+      run: |
+        ls -al WebGoat/ansible
+
     # Set up Minikube
     - name: Set up Minikube
       run: |
