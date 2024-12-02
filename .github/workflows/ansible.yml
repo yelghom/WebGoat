@@ -38,4 +38,5 @@ jobs:
     # Deploy with Ansible
     - name: Deploy with Ansible
       run: |
+        cd WebGoat/ansible
         ansible-playbook -i hosts configure_cluster.yml
