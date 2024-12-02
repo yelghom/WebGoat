@@ -13,6 +13,9 @@ jobs:
     # Checkout the code from the repository
     - name: Checkout code
       uses: actions/checkout@v3
+        with:
+          repository: 'yelghom/WebGoat'
+          path: 'WebGoat'
 
     # Set up Minikube
     - name: Set up Minikube
