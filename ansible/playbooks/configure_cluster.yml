@@ -25,3 +25,11 @@
       - name: Apply Service for WebGoat
         command: kubectl apply -f service_account.yml
         ignore_errors: true
+
+      - name: Create Monitoring Namespace
+        command: kubectl create namespace monitoring
+        ignore_errors: true
+    
+      - name: Create Service Account for Prometheus
+        command: kubectl create serviceaccount prometheus-sa -n monitoring
+        ignore_errors: true
