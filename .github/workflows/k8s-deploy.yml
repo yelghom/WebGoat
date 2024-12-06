@@ -3,7 +3,7 @@ name: Build and Deploy WebGoat
 on:
   push:
     branches:
-      - main  # Trigger workflow on pushes to the main branch
+      - partie2  # Trigger workflow on pushes to the main branch
 
 jobs:
   build_and_deploy:
