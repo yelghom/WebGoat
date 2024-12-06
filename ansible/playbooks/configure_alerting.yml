@@ -1,0 +1,22 @@
+---
+- name: Configure Alerts
+  hosts: localhost
+  tasks:
+    - name: Create Alertmanager Config for Discord
+      copy:
+        content: |
+          global:
+            resolve_timeout: 5m
+          route:
+            receiver: "discord"
+          receivers:
+            - name: "discord"
+              webhook_configs:
+                - url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        dest: /etc/prometheus/alertmanager.yml
+
+    - name: Apply Alertmanager Config
+      command: kubectl create secret generic alertmanager-main --from-file=/etc/prometheus/alertmanager.yml --namespace monitoring --dry-run=client -o yaml | kubectl apply -f -
+
+    - name: Restart Prometheus Pods to Apply Alerting
+      command: kubectl rollout restart deployment prometheus-server --namespace monitoring
