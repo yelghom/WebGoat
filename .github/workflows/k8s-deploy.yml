@@ -3,7 +3,7 @@ name: Deploy to Kubernetes
 on:
   push:
     branches:
-      - main  # Déclencher sur les commits de la branche main
+      - partie2  # Déclencher sur les commits de la branche main
 
 jobs:
   deploy:

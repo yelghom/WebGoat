@@ -3,7 +3,7 @@ name: Deploy Ansible with Minikube and kubectl
 on:
   push:
     branches:
-      - main
+      - partie2
 
 jobs:
   setup:

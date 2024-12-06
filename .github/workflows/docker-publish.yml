@@ -3,7 +3,7 @@ name: "Docker Build, Security Scan, and Publish"
 on:
   push:
     branches:
-      - main # Runs on pushes to the main branch
+      - partie2 # Runs on pushes to the main branch
 
 jobs:
   build:
