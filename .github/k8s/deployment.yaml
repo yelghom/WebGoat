@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webgoat
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webgoat
+  template:
+    metadata:
+      labels:
+        app: webgoat
+    spec:
+      containers:
+      - name: webgoat
+        image: yoouaa/webgoat:latest
+        ports:
+        - containerPort: 8080
