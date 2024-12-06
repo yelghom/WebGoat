@@ -42,8 +42,23 @@ jobs:
         sudo apt update
         sudo apt install -y ansible
 
+   # Install Helm (required for Prometheus and Grafana)
+    - name: Install Helm
+      run: |
+        curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
     # Deploy with Ansible
-    - name: Deploy with Ansible
+    - name: Deploy WebGoat with Ansible
       run: |
         cd WebGoat/ansible/playbooks
         ansible-playbook -i hosts configure_cluster.yml
+
+    - name: Deploy Monitoring Tools with Ansible
+      run: |
+        cd WebGoat/ansible/playbooks
+        ansible-playbook -i hosts deploy_monitoring.yml
+
+    - name: Configure Alerts with Ansible
+      run: |
+        cd WebGoat/ansible/playbooks
+        ansible-playbook -i hosts configure_alerting.yml
