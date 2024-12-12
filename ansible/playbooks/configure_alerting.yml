@@ -2,6 +2,11 @@
 - name: Configure Alerts
   hosts: localhost
   tasks:
+    - name: Ensure /tmp/prometheus directory exists
+      file:
+          path: /tmp/prometheus
+          state: directory
+          mode: '0755'
     - name: Create Alertmanager Config for Discord
       copy:
         content: |
@@ -12,11 +17,15 @@
           receivers:
             - name: "discord"
               webhook_configs:
-                - url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        dest: /etc/prometheus/alertmanager.yml
+                - url:  ${{ secrets.DISCORD_WEBHOOK_URL }}
+        dest: /tmp/prometheus/alertmanager.yml
 
     - name: Apply Alertmanager Config
-      command: kubectl create secret generic alertmanager-main --from-file=/etc/prometheus/alertmanager.yml --namespace monitoring --dry-run=client -o yaml | kubectl apply -f -
+      shell: |
+          kubectl create secret generic alertmanager-main \
+            --from-file=/tmp/prometheus/alertmanager.yml \
+            --namespace monitoring \
+            --dry-run=client -o yaml | kubectl apply -f -
 
     - name: Restart Prometheus Pods to Apply Alerting
       command: kubectl rollout restart deployment prometheus-server --namespace monitoring
