@@ -27,6 +27,10 @@ jobs:
       with:
         ssh-keys: ${{ secrets.SSH_PRIVATE_KEY }}
 
+    - name: Clone Repository
+      run: |
+        git clone https://github.com/yelghom/WebGoat.git /home/runner/webgoat-repo
+
     # Set up Minikube
     - name: Set up Minikube
       run: |
