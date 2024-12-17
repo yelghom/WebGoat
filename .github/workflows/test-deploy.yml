@@ -39,6 +39,12 @@ jobs:
         sudo mv minikube /usr/local/bin/
         minikube start --driver=docker
 
+    # Install d’Ansible
+    - name: Install Ansible
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ansible
+        
     # Set up kubectl
     - name: Install kubectl
       run: |
@@ -46,9 +52,13 @@ jobs:
         sudo chmod +x kubectl
         sudo mv kubectl /usr/local/bin/
         
+    - name: Set up SSH
+      if: ${{ secrets.SSH_PRIVATE_KEY != '' }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+      
     - name: Deploy with Ansible on Azure VM
       run: |
-        ssh -o StrictHostKeyChecking=no azureuser@172.190.64.130 << 'EOF'
-          cd WebGoat/ansible/playbooks || exit
-          ansible-playbook configure_cluster.yml
-        EOF
+       ansible-playbook -i hosts WebGoat/ansible/playbooks/configure_cluster.yml
