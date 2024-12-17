@@ -11,11 +11,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up SSH for deployment
-        uses: webfactory/ssh-agent-action@v0
+        
+      - name: Set up SSH agent
+        uses: actions/checkout@v2
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Add your private key as a secret
+          ssh-keys: ${{ secrets.SSH_PRIVATE_KEY }}
 
       # - name: Update APT and Install Dependencies
       #   run: |
