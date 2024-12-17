@@ -50,7 +50,8 @@ jobs:
 
       - name: Deploy with Ansible
         run: |
-          ansible-playbook -i hosts WebGoat/ansible/playbooks/configure_cluster.yml
+          cd WebGoat/ansible/playbooks
+          ansible-playbook -i hosts configure_cluster.yml
 
       # - name: Deploy WebGoat with Ansible
       #   run: |
