@@ -30,14 +30,27 @@ jobs:
       #   run: |
       #     sudo apt-get update
       #     sudo apt-get install -y default-jdk git unzip
-
-      - name: Navigate to playbooks directory
+      
+    # Set up kubectl
+      - name: Install kubectl
         run: |
-          cd WebGoat/ansible/playbooks
+          curl -LO "https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl"
+          sudo chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+  
+      # Set up Ansible
+      - name: Set up Ansible
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
+
+      # - name: Navigate to playbooks directory
+      #   run: |
+      #     cd WebGoat/ansible/playbooks
 
       - name: Deploy with Ansible
         run: |
-          ansible-playbook -i hosts configure_cluster.yml
+          ansible-playbook -i hosts WebGoat/ansible/playbooks/configure_cluster.yml
 
       # - name: Deploy WebGoat with Ansible
       #   run: |
