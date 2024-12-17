@@ -9,9 +9,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+    # Checkout the code from the repository
       - name: Checkout code
-        uses: actions/checkout@v2
-        
+        uses: actions/checkout@v3
+        with:
+          repository: 'yelghom/WebGoat'
+          path: 'WebGoat'
+          
       - name: Set up SSH agent
         uses: actions/checkout@v2
         with:
