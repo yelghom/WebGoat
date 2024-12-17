@@ -1,2 +1,2 @@
 [webgoat]
-172.190.64.130 ansible_user=azureuser ansible_python_interpreter=/usr/bin/python3 ansible_ssh_private_key_file=${{ secrets.SSH_PRIVATE_KEY }}
+172.190.64.130 ansible_user=azureuser ansible_python_interpreter=/usr/bin/python3
