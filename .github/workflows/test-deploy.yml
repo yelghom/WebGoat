@@ -45,15 +45,10 @@ jobs:
         curl -LO "https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl"
         sudo chmod +x kubectl
         sudo mv kubectl /usr/local/bin/
-
-    # Set up Ansible
-    - name: Set up Ansible
+        
+    - name: Deploy with Ansible on Azure VM
       run: |
-        sudo apt update
-        sudo apt install -y ansible
-
-    # Deploy with Ansible
-    - name: Deploy with Ansible
-      run: |
-        cd WebGoat/ansible/playbooks
-        ansible-playbook -i hosts configure_cluster.yml
+        ssh -o StrictHostKeyChecking=no azureuser@172.190.64.130 << 'EOF'
+          cd WebGoat/ansible/playbooks || exit
+          ansible-playbook configure_cluster.yml
+        EOF
