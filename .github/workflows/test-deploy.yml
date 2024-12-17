@@ -22,10 +22,10 @@ jobs:
         ls -al WebGoat/ansible
 
     
-    - name: Set up SSH agent
-      uses: actions/checkout@v2
-      with:
-        ssh-keys: ${{ secrets.SSH_PRIVATE_KEY }}
+    # - name: Set up SSH agent
+    #   uses: actions/checkout@v2
+    #   with:
+    #     ssh-keys: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Clone Repository
       run: |
