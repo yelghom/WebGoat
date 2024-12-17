@@ -1,4 +1,4 @@
-name: WebGoat Deployment
+name: Webgoat deployment test
 
 on:
   push:
@@ -6,54 +6,50 @@ on:
       - main
 
 jobs:
-  deploy:
+  setup:
     runs-on: ubuntu-latest
+
     steps:
     # Checkout the code from the repository
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          repository: 'yelghom/WebGoat'
-          path: 'WebGoat'
-      
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        repository: 'yelghom/WebGoat'
+        path: 'WebGoat'
 
-      - name: List files in ansible directory
-        run: |
-          ls -al WebGoat/ansible
-        
-      - name: Set up SSH agent
-        uses: actions/checkout@v2
-        with:
-          ssh-keys: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: List files in ansible directory
+      run: |
+        ls -al WebGoat/ansible
 
-      # - name: Update APT and Install Dependencies
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install -y default-jdk git unzip
-      
+    
+    - name: Set up SSH agent
+      uses: actions/checkout@v2
+      with:
+        ssh-keys: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    # Set up Minikube
+    - name: Set up Minikube
+      run: |
+        curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+        sudo chmod +x minikube
+        sudo mv minikube /usr/local/bin/
+        minikube start --driver=docker
+
     # Set up kubectl
-      - name: Install kubectl
-        run: |
-          curl -LO "https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl"
-          sudo chmod +x kubectl
-          sudo mv kubectl /usr/local/bin/
-  
-      # Set up Ansible
-      - name: Set up Ansible
-        run: |
-          sudo apt update
-          sudo apt install -y ansible
+    - name: Install kubectl
+      run: |
+        curl -LO "https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl"
+        sudo chmod +x kubectl
+        sudo mv kubectl /usr/local/bin/
 
-      # - name: Navigate to playbooks directory
-      #   run: |
-      #     cd WebGoat/ansible/playbooks
+    # Set up Ansible
+    - name: Set up Ansible
+      run: |
+        sudo apt update
+        sudo apt install -y ansible
 
-      - name: Deploy with Ansible
-        run: |
-          cd WebGoat/ansible/playbooks
-          ansible-playbook -i hosts configure_cluster.yml
-
-      # - name: Deploy WebGoat with Ansible
-      #   run: |
-      #     cd WebGoat/ansible/playbooks
-      #     ansible-playbook -i hosts configure_cluster.yml
+    # Deploy with Ansible
+    - name: Deploy with Ansible
+      run: |
+        cd WebGoat/ansible/playbooks
+        ansible-playbook -i hosts configure_cluster.yml
