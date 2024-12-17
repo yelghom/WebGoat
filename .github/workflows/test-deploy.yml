@@ -15,7 +15,12 @@ jobs:
         with:
           repository: 'yelghom/WebGoat'
           path: 'WebGoat'
-          
+      
+
+      - name: List files in ansible directory
+        run: |
+          ls -al WebGoat/ansible
+        
       - name: Set up SSH agent
         uses: actions/checkout@v2
         with:
