@@ -21,6 +21,10 @@ jobs:
       run: |
         ls -al WebGoat/ansible
 
+    - name: Set up SSH agent
+      uses: actions/checkout@v2
+      with:
+        ssh-keys: ${{ secrets.SSH_PRIVATE_KEY }}
     # Set up Minikube
     - name: Set up Minikube
       run: |
