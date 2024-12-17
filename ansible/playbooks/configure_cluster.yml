@@ -1,6 +1,6 @@
 ---
 - name: Configure WebGoat Cluster
-  hosts: local
+  hosts: all
   tasks:
       - name: Create WebGoat namespace
         command: kubectl create namespace webgoat
