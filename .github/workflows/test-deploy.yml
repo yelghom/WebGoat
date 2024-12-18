@@ -52,13 +52,21 @@ jobs:
         sudo chmod +x kubectl
         sudo mv kubectl /usr/local/bin/
         
+    # - name: Set up SSH
+    #   # if: ${{ secrets.SSH_PRIVATE_KEY != '' }}
+    #   run: |
+    #     mkdir -p ~/.ssh
+    #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+    #     chmod 600 ~/.ssh/id_rsa
+
     - name: Set up SSH
-      # if: ${{ secrets.SSH_PRIVATE_KEY != '' }}
       run: |
         mkdir -p ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-      
+        echo "StrictHostKeyChecking no" >> ~/.ssh/config
+        chmod 600 ~/.ssh/config
+        
     - name: Deploy with Ansible on Azure VM
       run: |
        ansible-playbook -i WebGoat/ansible/playbooks/hosts.ini WebGoat/ansible/playbooks/configure_cluster.yml
