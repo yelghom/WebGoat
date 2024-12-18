@@ -1,2 +1,2 @@
-[local]
-localhost ansible_connection=local
+[webgoat]
+4.239.110.7 ansible_user=azureuser ansible_ssh_common_args='-o StrictHostKeyChecking=no'
