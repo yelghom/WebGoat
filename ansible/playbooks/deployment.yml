@@ -4,9 +4,6 @@ metadata:
     name: webgoat
     namespace: webgoat
 spec:
-    tolerations:
-      - key: "node-role.kubernetes.io/control-plane"
-        effect: "NoSchedule"
     replicas: 1
     selector:
         matchLabels:
@@ -16,6 +13,9 @@ spec:
             labels:
                 app: webgoat
         spec:
+            tolerations:
+                - key: "node-role.kubernetes.io/control-plane"
+                  effect: "NoSchedule"
             serviceAccountName: webgoat-sa
             containers:
                 - name: webgoat
@@ -25,11 +25,11 @@ spec:
                         name: http
                   resources:
                       requests:
+                          memory: "256Mi"
+                          cpu: "250m"
+                      limits:
                           memory: "512Mi"
                           cpu: "500m"
-                      limits:
-                          memory: "1Gi"
-                          cpu: "1"
                   startupProbe:
                       tcpSocket:
                           port: 8080
