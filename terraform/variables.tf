@@ -20,8 +20,8 @@ variable "resource_limits" {
     memory = string
   })
   default = {
-    cpu    = "1"
-    memory = "1Gi"
+    cpu    = "500m"
+    memory = "512Mi"
   }
 }
 
@@ -33,8 +33,8 @@ variable "resource_requests" {
     memory = string
   })
   default = {
-    cpu    = "500m"
-    memory = "512Mi"
+    cpu    = "250m"
+    memory = "256Mi"
   }
 }
 
