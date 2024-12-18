@@ -61,4 +61,4 @@ jobs:
       
     - name: Deploy with Ansible on Azure VM
       run: |
-       ansible-playbook -i hosts WebGoat/ansible/playbooks/configure_cluster.yml
+       ansible-playbook -i WebGoat/ansible/playbooks/hosts.ini WebGoat/ansible/playbooks/configure_cluster.yml
