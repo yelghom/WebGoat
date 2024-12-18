@@ -4,6 +4,9 @@ metadata:
     name: webgoat
     namespace: webgoat
 spec:
+    tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        effect: "NoSchedule"
     replicas: 1
     selector:
         matchLabels:
