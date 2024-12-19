@@ -66,6 +66,7 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
         echo "StrictHostKeyChecking no" >> ~/.ssh/config
         chmod 600 ~/.ssh/config
+        ssh -i ~/.ssh/id_rsa azureuser@4.239.110.7
         
     - name: Deploy with Ansible on Azure VM
       run: |
