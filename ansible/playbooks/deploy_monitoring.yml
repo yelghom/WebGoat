@@ -20,7 +20,7 @@
         --set grafana.sidecar.dashboards.enabled=true \
         --set grafana.enabled=true \
         --set api.v1.enabled=true \
-        -f promtetheus.yaml
+        -f prometheus.yml
 
 
 
