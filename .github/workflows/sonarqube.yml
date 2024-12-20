@@ -3,7 +3,7 @@ name: SonarQube Analysis
 on:
   push:
     branches:
-      - partie2  # Analyse déclenchée sur chaque push vers la branche main
+      - main  # Analyse déclenchée sur chaque push vers la branche main
 
 jobs:
   build:
