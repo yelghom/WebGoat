@@ -1,0 +1,10 @@
+- name: Deploy application to Kubernetes
+  hosts: kubernetes
+  tasks:
+    - name: Apply Kubernetes deployment
+      community.kubernetes.k8s:
+        definition: "{{ lookup('file', 'k8s/deployment.yaml') }}"
+
+    - name: Apply Kubernetes service
+      community.kubernetes.k8s:
+        definition: "{{ lookup('file', 'k8s/service.yaml') }}"
