@@ -1,4 +1,4 @@
-name: Deploy Ansible with Minikube and kubectl
+name: Deploy Webgoat with Ansible, Minikube, kubectl locally
 
 on:
   push:
