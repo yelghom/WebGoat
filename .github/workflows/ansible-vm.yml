@@ -1,4 +1,4 @@
-name: Webgoat deployment test
+name: Deploy Webgoat with Ansible, Minikube, kubectl on Azure VM
 
 on:
   push:
