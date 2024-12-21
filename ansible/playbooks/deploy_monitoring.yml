@@ -1,0 +1,42 @@
+---
+- name: Deploy Monitoring Tools
+  hosts: localhost
+  tasks:
+    - name: Add Helm repository for Prometheus
+      command: helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+    - name: Add Helm repository for Grafana
+      command: helm repo add grafana https://grafana.github.io/helm-charts
+
+    - name: Update Helm repositories
+      command: helm repo update
+
+    - name: Deploy Prometheus with default rules
+      command: |
+        helm install prometheus prometheus-community/prometheus \
+        --namespace monitoring \
+        --set alertmanager.enabled=true \
+        --set prometheus.rules.enabled=true \
+        --set grafana.sidecar.dashboards.enabled=true \
+        --set grafana.enabled=true \
+        --set api.v1.enabled=true \
+        -f prometheus.yml
+
+
+
+    - name: Deploy Kube-state-metrics
+      command: helm install kube-state-metrics prometheus-community/kube-state-metrics --namespace monitoring
+
+    - name: Wait for Prometheus Pods to be Ready
+      command: kubectl wait --namespace monitoring --for=condition=ready pod -l app=prometheus-server --timeout=120s
+
+    - name: Deploy Grafana with default dashboards
+      command: |
+        helm upgrade --install grafana grafana/grafana \
+        --namespace monitoring \
+        --set persistence.enabled=true \
+        --set adminPassword=admin \
+        --set sidecar.dashboards.enabled=true
+
+    - name: Wait for Grafana Pod to be Ready
+      command: kubectl wait --namespace monitoring --for=condition=ready pod -l app.kubernetes.io/name=grafana --timeout=120s
