@@ -2,17 +2,17 @@
 - name: Configure WebGoat Cluster
   hosts: webgoat
   tasks:
-      - name: Create WebGoat namespace
-        command: kubectl create namespace webgoat
-        ignore_errors: true
+      # - name: Create WebGoat namespace
+      #   command: kubectl create namespace webgoat
+      #   ignore_errors: true
 
       - name: Apply Resource Quota for WebGoat
-        command: kubectl apply -f resource_quota.yml
+        command: kubectl apply -f WebGoat/ansible/playbooks/resource_quota.yml
         ignore_errors: true
 
-      - name: Create Service Account for WebGoat
-        command: kubectl create serviceaccount webgoat-sa -n webgoat
-        ignore_errors: true
+      # - name: Create Service Account for WebGoat
+      #   command: kubectl create serviceaccount webgoat-sa -n webgoat
+      #   ignore_errors: true
 
       - name: Apply Deployment for WebGoat
         command: kubectl apply -f WebGoat/ansible/playbooks/deployment.yml
