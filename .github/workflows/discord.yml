@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Discord notification
+       # if: ${{ github.event.workflow_run.conclusion == 'failure' }}
         uses: Ilshidur/action-discord@master
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
@@ -20,3 +21,4 @@ jobs:
             **Status:** ${{ github.event.workflow_run.conclusion }}
             **Branch:** ${{ github.event.workflow_run.head_branch }}
             **Commit:** ${{ github.event.workflow_run.head_commit.message }}
+            **[View Workflow Run](${{ github.event.workflow_run.html_url }})`
