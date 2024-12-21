@@ -15,9 +15,9 @@
         ignore_errors: true
 
       - name: Apply Deployment for WebGoat
-        command: kubectl apply -f deployment.yml
+        command: kubectl apply -f WebGoat/ansible/playbooks/deployment.yml
         ignore_errors: true
 
       - name: Apply Service for WebGoat
-        command: kubectl apply -f service_account.yml
+        command: kubectl apply -f WebGoat/ansible/playbooks/service_account.yml
         ignore_errors: true
