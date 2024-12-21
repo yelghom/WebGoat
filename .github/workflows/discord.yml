@@ -2,7 +2,7 @@ name: Discord Notifications
 
 on:
   workflow_run:
-    workflows: ["SonarQube Analysis"]
+    workflows: ["SonarQube Analysis", "Docker Build, Security Scan, and Publish"]
     types: [completed]
 
 jobs:
