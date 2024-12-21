@@ -62,3 +62,8 @@ jobs:
     - name: Deploy with Ansible on Azure VM
       run: |
        ansible-playbook -i WebGoat/ansible/playbooks/hosts WebGoat/ansible/playbooks/configure_cluster.yml
+
+    - name: Show webgoat service url
+      run: |
+        echo "Webgoat Service"
+        echo "http://20.237.30.13/WebGoat/login"
