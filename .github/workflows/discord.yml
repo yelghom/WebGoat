@@ -15,7 +15,7 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
         with:
           args: |
-            🔔 Pipeline Status Update
+            Security Tests Status: 
             **Workflow:** ${{ github.event.workflow_run.name }}
             **Status:** ${{ github.event.workflow_run.conclusion }}
             **Branch:** ${{ github.event.workflow_run.head_branch }}
