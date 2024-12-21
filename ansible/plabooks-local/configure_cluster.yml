@@ -1,6 +1,6 @@
 ---
 - name: Configure WebGoat Cluster
-  hosts: webgoat
+  hosts: local
   tasks:
       - name: Create WebGoat namespace
         command: kubectl create namespace webgoat
@@ -8,6 +8,10 @@
 
       - name: Apply Resource Quota for WebGoat
         command: kubectl apply -f resource_quota.yml
+        ignore_errors: true
+
+      - name: Apply Network Policy for WebGoat
+        command: kubectl apply -f network_policy.yml
         ignore_errors: true
 
       - name: Create Service Account for WebGoat
